@@ -1,0 +1,37 @@
+{
+    "type": "AdaptiveCard",
+    "$schema": "http://adaptivecards.io/schemas/adaptive-card.json",
+    "version": "1.2",
+    "body": [
+        {
+            "type": "TextBlock",
+            "text": "Get Faculty Webex Status",
+            "wrap": true,
+            "size": "Medium",
+            "weight": "Bolder"
+        },
+        {
+            "type": "TextBlock",
+            "text": "Enter the User's Email address:",
+            "wrap": true
+        },
+        {
+            "type": "Input.Text",
+            "placeholder": "Enter Full Faculty Email",
+            "id": "faculty_email"
+        },
+        {
+            "type": "ActionSet",
+            "actions": [
+                {
+                    "type": "Action.Submit",
+                    "title": "Submit",
+                    "style": "positive",
+                    "data": {
+                        "callback_keyword": "check"
+                    }
+                }
+            ]
+        }
+    ]
+}
