@@ -26,7 +26,7 @@ class checkStatus(Command):
 
         facultyEmail = attachment_actions.inputs['faculty_email']
         url = f"https://webexapis.com/v1/people?email={facultyEmail}"
-        headers = {'Authorization' : 'Bearer ZTM5OTliZWMtNTM3MC00M2MwLWI2ODMtMzg5YTU0ZTYzN2EyNmM3MGYwNjMtNDgz_PF84_84afd2ff-3a95-48f3-8746-17a816f97a4f'}
+        headers = {'Authorization' : 'Bearer XXXXXXXXYYYYYYYZZZZZADDTOKENHERE'}
 
         #Query Webex for user
         response = requests.request("GET", url, headers=headers)
