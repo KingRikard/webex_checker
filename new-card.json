@@ -18,7 +18,8 @@
         {
             "type": "Input.Text",
             "placeholder": "first name",
-            "id": "nameFirst"
+            "id": "nameFirst",
+            "maxLength": 26
         },
         {
             "type": "TextBlock",
@@ -28,7 +29,8 @@
         {
             "type": "Input.Text",
             "placeholder": "last name",
-            "id": "nameLast"
+            "id": "nameLast",
+            "maxLength": 50
         },
         {
             "type": "TextBlock",
@@ -38,7 +40,8 @@
         {
             "type": "Input.Text",
             "placeholder": "Enter Full Email",
-            "id": "userEmail"
+            "id": "userEmail",
+            "style": "Email"
         },
         {
             "type": "ActionSet",

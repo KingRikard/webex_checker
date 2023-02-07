@@ -8,11 +8,13 @@ from adaptivecardbuilder import *
 
 
 webex_token = os.environ["WEBEX_BOT_TOKEN"]
-##print(webex_token)
+#This is the 12-hour Webex Token you get from developer.webex.com
+auth_token = "ZTM5OTliZWMtNTM3MC00M2MwLWI2ODMtMzg5YTU0ZTYzN2EyNmM3MGYwNjMtNDgz_PF84_84afd2ff-3a95-48f3-8746-17a816f97a4f"
 log = logging.getLogger(__name__)
 
 with open("./input-card.json", "r") as card:
     INPUT_CARD = json.load(card)
+
 
 class checkStatus(Command):
     def __init__(self):
@@ -22,11 +24,12 @@ class checkStatus(Command):
             card=INPUT_CARD,
         )
 
+
     def execute(self, message, attachment_actions, activity):
 
         facultyEmail = attachment_actions.inputs['faculty_email']
         url = f"https://webexapis.com/v1/people?email={facultyEmail}"
-        headers = {'Authorization' : 'Bearer ZTM5OTliZWMtNTM3MC00M2MwLWI2ODMtMzg5YTU0ZTYzN2EyNmM3MGYwNjMtNDgz_PF84_84afd2ff-3a95-48f3-8746-17a816f97a4f'}
+        headers = {'Authorization' : 'Bearer ' + auth_token }
 
         #Query Webex for user
         response = requests.request("GET", url, headers=headers)
