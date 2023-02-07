@@ -52,7 +52,11 @@ class checkStatus(Command):
             email           =   webexUser['items'][0]['emails'][0]
             created         =   webexUser['items'][0]['created']
             status          =   webexUser['items'][0]['status']
-            lastActivity    =   webexUser['items'][0]['lastActivity']
+            try:
+                lastActivity    =   webexUser['items'][0]['lastActivity']
+            except KeyError:
+                lastActivity    =   "NEVER"
+
             try:
                 avatar          =   webexUser['items'][0]['avatar']           
             except KeyError:
