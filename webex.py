@@ -8,7 +8,6 @@ from adaptivecardbuilder import *
 
 
 webex_token = os.environ["WEBEX_BOT_TOKEN"]
-access_token = "ZTM5OTliZWMtNTM3MC00M2MwLWI2ODMtMzg5YTU0ZTYzN2EyNmM3MGYwNjMtNDgz_PF84_84afd2ff-3a95-48f3-8746-17a816f97a4f"
 ##print(webex_token)
 log = logging.getLogger(__name__)
 
@@ -26,16 +25,14 @@ class checkStatus(Command):
     def execute(self, message, attachment_actions, activity):
 
         facultyEmail = attachment_actions.inputs['faculty_email']
-        print(f"This is the {facultyEmail} being used")
         url = f"https://webexapis.com/v1/people?email={facultyEmail}"
         headers = {'Authorization' : 'Bearer ZTM5OTliZWMtNTM3MC00M2MwLWI2ODMtMzg5YTU0ZTYzN2EyNmM3MGYwNjMtNDgz_PF84_84afd2ff-3a95-48f3-8746-17a816f97a4f'}
 
-        print(url)
         #Query Webex for user
         response = requests.request("GET", url, headers=headers)
         webexUser = response.json()
-        print(webexUser)
-        
+
+        #Webex returns JSON string with 0 items in it, and code 200, when the user does NOT exist. Need to check for that!
         if len(webexUser['items']) == 0:
             firstName       =   "N/A"
             lastName        =   "N/A"
@@ -52,16 +49,18 @@ class checkStatus(Command):
             email           =   webexUser['items'][0]['emails'][0]
             created         =   webexUser['items'][0]['created']
             status          =   webexUser['items'][0]['status']
+            # Check if user has ever logged in. If not, use 'except' value
             try:
                 lastActivity    =   webexUser['items'][0]['lastActivity']
             except KeyError:
                 lastActivity    =   "NEVER"
-
+            # Check if user has an avatar, or uses default avatar in 'except' value
             try:
                 avatar          =   webexUser['items'][0]['avatar']           
             except KeyError:
-                avatar          = "https://cdn0.iconfinder.com/data/icons/interface-set-vol-2/50/No_data_No_info_Missing-512.png"                  
-        print("card Start")
+                avatar          = "https://cdn0.iconfinder.com/data/icons/interface-set-vol-2/50/No_data_No_info_Missing-512.png"     
+
+#        print("card Start")
         card = AdaptiveCard()
         card.add(TextBlock(text=f"HCC User: {displayName}", size="Medium", weight="Bolder"))
         card.add(ColumnSet())
@@ -79,8 +78,6 @@ class checkStatus(Command):
         card.add(Image(url=avatar, size="medium"))
         card_data = json.loads(asyncio.run(card.to_json()))
 
-        print("after Card Data")
-        print("finally start")
         card_payload = {
             "contentType": "application/vnd.microsoft.card.adaptive",
             "content": card_data,
